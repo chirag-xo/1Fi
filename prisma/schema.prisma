@@ -1,0 +1,53 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  brand       String
+  mrp         Float
+  price       Float
+  imageUrl    String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  variants    Variant[]
+  emiPlans    EmiPlan[]
+
+  @@index([slug])
+}
+
+model Variant {
+  id        String  @id @default(cuid())
+  productId String
+  color     String
+  storage   String
+  imageUrl  String?
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model EmiPlan {
+  id             String  @id @default(cuid())
+  productId      String
+  tenure         Int     // months
+  monthlyPayment Float
+  interestRate   Float   // annual %
+  cashback       Float   @default(0)
+  totalPayment   Float
+  recommended    Boolean @default(false)
+  tag            String? // "Best Value" | "Lowest Cost" | "Most Popular" | "Lowest EMI"
+  product        Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
