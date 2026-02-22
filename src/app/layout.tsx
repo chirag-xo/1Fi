@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css"; export const metadata: Metadata = {
+import { Toaster } from "sonner";
+import "./globals.css";
+
+export const metadata: Metadata = {
     title: {
         default: "SmartEMI — Intelligent EMI Selection Platform",
         template: "%s | SmartEMI",
@@ -25,6 +28,7 @@ export default function RootLayout({
             <body className="antialiased">
                 <div className="relative z-10 min-h-screen flex flex-col">
                     <main className="flex-1">{children}</main>
+                    <Toaster position="top-center" richColors theme="light" />
                     <footer className="border-t border-border py-8 text-center text-sm text-text-secondary">
                         <p>
                             © 2026 SmartEMI — Intelligent EMI Selection Platform. Built with

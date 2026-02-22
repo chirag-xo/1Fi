@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 import {
     CheckCircle2,
@@ -31,7 +32,10 @@ function ConfirmContent({ slug }: { slug: string }) {
     const effectiveCost = total - cashback;
 
     const handleConfirm = () => {
-        alert("🎉 Order placed successfully! Your EMI plan is now active.");
+        toast.success("Order placed successfully!", {
+            description: "Your EMI plan is now active.",
+            icon: "🎉",
+        });
         router.push("/");
     };
 
